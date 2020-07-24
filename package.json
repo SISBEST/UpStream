@@ -1,0 +1,20 @@
+{
+  "name": "ChroniclesOfHotDog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/storage": "^5.1.2",
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.4",
+    "firebase-admin": "^9.0.0",
+    "stripe": "^8.77.0"
+  }
+}

@@ -1,0 +1,22 @@
+[
+	{
+		"name": "Create a Blog",
+		"id": 0,
+		"desc": "You'll create a blog in less than an hour and learn to create Vue-driven static sites with the Nuxt Static Site Generator.",
+		"tech": [
+			"Vue",
+			"Nuxt",
+			"Netlify",
+			"Netlify CMS"
+		]
+	},
+	{
+		"name": "SamuelLang Crash Course",
+		"id": 1,
+		"desc": "Learn to create server-side code easily.",
+		"tech": [
+			"SamuelLang",
+			"Node.js"
+		]
+	}
+]

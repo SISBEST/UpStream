@@ -1,0 +1,27 @@
+<h2>Welcome, {{name}}!</h2>
+<div style="background-color: #00a1de; float: left; width: 40%;">
+	<h3>Play</h3>
+	<hr />
+	{{#each games}}
+		<h4>{{this.name}}</h4>
+		<p>{{this.desc}}</p>
+		<a href="/play/{{this.id}}">Play</a>
+		<hr />
+	{{/each}}
+</div>
+<div style="background-color: #009b3a; float: right; width: 45%;">
+	<h3>Code</h3>
+	<hr />
+	{{#each code}}
+		<h4>{{this.name}}</h4>
+		<p>{{this.desc}}</p>
+		<p>Uses:</p>
+		<ul>
+			{{#each this.tech}}
+				<li>{{this}}</li>
+			{{/each}}
+		</ul>
+		<a href="/code/{{this.id}}">Start</a>
+		<hr />
+	{{/each}}
+</div>

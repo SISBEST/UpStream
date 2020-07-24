@@ -1,0 +1,55 @@
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+	input,
+.StripeElement {
+  height: 40px;
+
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+.StripeElement {
+  padding: 15px;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+</style>
+<br />
+<div id="card-element"></div><br />
+<button id="card-button" onclick="pay();">
+  Submit Payment
+</button>
+<script>
+	var stripe = Stripe('pk_test_51H7BMdCHclnmAu5Q7IZhmNKzqf3CC3DDm0Gz4xqMoAs70r7lZD0E2f1dOX7a7o1Brbbh9Wm8XkqPe0SUfyiAIcKg00wIIE47T5');
+	var elements = stripe.elements();
+	var card = elements.create("card");
+	card.mount("#card-element");
+	function pay(){
+		var sec = "{{client_secret}}";
+		stripe.confirmCardPayment(sec, {
+			payment_method: {
+				card: card,
+				billing_details: {
+					name: '{{id}}'
+				}
+			}
+		}).then(function(result){
+			if (result.error){
+				console.error(result.error);
+			} else {
+				if(result.paymentIntent.status === 'succeeded') {
+					window.location.href = "/done";
+				}
+			}
+		});
+	}
+
+</script>

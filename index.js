@@ -1,5 +1,7 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
+var fs = require('fs');
+var path = require('path')
 var stripe = require('stripe')(process.env.STRIPE);
 var code = require('./code.json');
 var games = require('./games.json');
@@ -32,30 +34,10 @@ db = admin.firestore();
 
 app.get('/', function(req, res) {
 	if (req.get('X-Replit-User-Id')) {
-		db.collection(req.get('X-Replit-User-Id')).doc('payment').get().then((doc) => {
-			if (!doc.exists || !doc.data().member) {
-				stripe.paymentIntents.create({
-					amount: "10000",
-					currency: 'usd',
-					metadata: {
-						integration_check: 'accept_a_payment'
-					}
-				}).then(function(intent){
-					res.render('pay', {
-						client_secret: intent.client_secret,
-						id: req.get('X-Replit-User-Id')
-					});
-				}).catch(function(err){
-					console.error(err);
-				});
-			} else {
-				res.render('portal', {
-					name: req.get('X-Replit-User-Name'),
-					code: code,
-					games: games
-				});
-			}
-		});
+		db.collection(req.get('X-Replit-User-Id')).doc('payment').get()
+			.then((doc) => {
+
+			});
 	} else {
 		res.render('home');
 	}
@@ -78,6 +60,29 @@ app.get('/code/:id', function(req, res) {
 	res.render('500', {
 		error: "Coming soon..."
 	});
+});
+
+app.get('/play/:id/:page', function(req, res) {
+	res.render('500', {
+		error: "Coming soon..."
+	});
+});
+
+app.get('/code/:id/:page', function(req, res) {
+	db.collection(req.get('X-Replit-User-Id')).doc('payment').get()
+		.then((doc) => {
+			if (doc.data().owns.includes(req.params.id)) {
+				fs.readFile(path.join(__dirname, req.params.id, req.params.page), 'utf8', function(err, data) {
+					if (err) {
+						res.send(err);
+					} else {
+						res.send(data);
+					}
+				});
+			} else {
+				res.status(403).send("AUTH");
+			}
+		});
 });
 
 app.use(function(req, res) {
